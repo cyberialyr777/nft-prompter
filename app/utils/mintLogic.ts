@@ -106,7 +106,7 @@ export async function mintAIgeneratedNFT(
 
     console.log("🟡 [MINT] === mintAIgeneratedNFT called ===");
     console.log("🟡 [MINT] walletAddress:", walletAddress);
-    console.log("🟡 [MINT] name:", name);
+
   
 
     // 1. Validar wallet
