@@ -17,7 +17,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Falta el prompt' }, { status: 400 });
     }
 
-    console.log("1. Llamando a DALL-E 3...");
     const aiResponse = await openai.images.generate({
       model: "dall-e-3", // Puedes cambiar a dall-e-2 si quieres que sea más rápido/barato en el hackathon
       prompt: prompt,
