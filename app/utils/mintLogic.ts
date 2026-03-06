@@ -80,7 +80,6 @@ function getPhantomWalletAdapter(
 
     const pubkey = new PublicKey(walletAddress);
 
-    console.log("🟡 [MINT] Using Phantom window.solana for signing");
     console.log("🟡 [MINT] Phantom publicKey:", phantom.publicKey?.toBase58());
 
     return {
