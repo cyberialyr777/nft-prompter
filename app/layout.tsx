@@ -15,8 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Solana dApp Starter",
-  description: "A minimal Next.js starter powered by @solana/react-hooks",
+  title: "NFT Prompter | IA + Mint",
+  description:
+    "Describe tu NFT en texto, la IA genera la imagen y se mintea en tu wallet de Solana Devnet en segundos.",
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",

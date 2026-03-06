@@ -24,7 +24,7 @@ export async function POST(req: Request) {
       n: 1,
       size: "1024x1024",
     });
-    
+
     const imageUrl = aiResponse.data[0].url;
     if (!imageUrl) throw new Error("No se pudo generar la imagen");
 
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
         ...formData.getHeaders()
       }
     });
-    
+
     const ipfsImageUrl = `https://gateway.pinata.cloud/ipfs/${pinataImgRes.data.IpfsHash}`;
 
     console.log("4. Creando y subiendo Metadata JSON...");
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
     console.log("✅ ÉXITO. URL del JSON:", metadataUrl);
 
     // Entregamos el resultado final a la Persona A y C
-    return NextResponse.json({ metadataUrl });
+    return NextResponse.json({ metadataUrl, ipfsImageUrl });
 
   } catch (error: any) {
     console.error("Error en la máquina de IA:", error.message || error);
