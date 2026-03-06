@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       size: "1024x1024",
     });
 
-    const imageUrl = aiResponse.data[0].url;
+    const imageUrl = aiResponse.data?.[0]?.url;
     if (!imageUrl) throw new Error("No se pudo generar la imagen");
 
     console.log("2. Descargando imagen a memoria...");
