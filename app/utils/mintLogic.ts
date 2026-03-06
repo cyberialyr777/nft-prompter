@@ -127,6 +127,15 @@ export async function mintAIgeneratedNFT(
 ): Promise<MintNFTResult> {
     const { wallet, name, metadataUrl } = params;
 
+    console.log("🟡 [MINT DEBUG] === mintAIgeneratedNFT called ===");
+    console.log("🟡 [MINT DEBUG] name:", name);
+    console.log("🟡 [MINT DEBUG] metadataUrl:", metadataUrl);
+    console.log("🟡 [MINT DEBUG] wallet:", wallet);
+    console.log("🟡 [MINT DEBUG] wallet keys:", wallet ? Object.keys(wallet) : "null");
+    console.log("🟡 [MINT DEBUG] wallet.account:", wallet?.account);
+    console.log("🟡 [MINT DEBUG] wallet.account.address:", wallet?.account?.address);
+    console.log("🟡 [MINT DEBUG] wallet.signTransaction type:", typeof wallet?.signTransaction);
+
     // 1. Validar wallet conectado
     if (!wallet?.account?.address) {
         throw new Error(
@@ -134,14 +143,20 @@ export async function mintAIgeneratedNFT(
         );
     }
 
+    console.log("🟡 [MINT DEBUG] Step 2: Creating Connection...");
     // 2. Configurar conexión a Devnet
     const connection = new Connection(clusterApiUrl("devnet"), {
         commitment: "confirmed",
     });
 
+    console.log("🟡 [MINT DEBUG] Step 3: Creating Metaplex wallet bridge...");
     // 3. Bridge: convertir wallet de Solana Kit al formato Metaplex
     const metaplexWallet = toMetaplexWallet(wallet);
+    console.log("🟡 [MINT DEBUG] metaplexWallet.publicKey:", metaplexWallet.publicKey?.toBase58());
+    console.log("🟡 [MINT DEBUG] metaplexWallet.signTransaction type:", typeof metaplexWallet.signTransaction);
+    console.log("🟡 [MINT DEBUG] metaplexWallet.signAllTransactions type:", typeof metaplexWallet.signAllTransactions);
 
+    console.log("🟡 [MINT DEBUG] Step 4: Initializing Metaplex...");
     // 4. Inicializar Metaplex
     const metaplex = Metaplex.make(connection)
         .use(walletAdapterIdentity(metaplexWallet))
@@ -153,6 +168,8 @@ export async function mintAIgeneratedNFT(
             }),
         );
 
+    console.log("🟡 [MINT DEBUG] Step 5: Calling metaplex.nfts().create()...");
+    console.log("🟡 [MINT DEBUG] Create params:", { uri: metadataUrl, name, sellerFeeBasisPoints: 500, isMutable: true });
     // 5. Mintear el NFT
     const { nft } = await metaplex.nfts().create({
         uri: metadataUrl,

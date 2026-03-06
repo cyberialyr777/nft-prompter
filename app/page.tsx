@@ -70,7 +70,9 @@ export default function Home() {
       updateStep(0, "done");
       updateStep(1, "done"); // IPFS upload is also done in the route
 
-      const { metadataUrl, ipfsImageUrl } = await res.json();
+      const apiResult = await res.json();
+      console.log("🔵 [DEBUG] API /api/generate response:", JSON.stringify(apiResult, null, 2));
+      const { metadataUrl, ipfsImageUrl } = apiResult;
 
       // Step 3: Mint NFT (dynamic import to avoid SSR issues with Metaplex)
       updateStep(2, "active");
@@ -79,6 +81,13 @@ export default function Home() {
 
       const nftName =
         prompt.length > 32 ? prompt.substring(0, 32) + "…" : prompt;
+
+      console.log("🔵 [DEBUG] Wallet object:", wallet);
+      console.log("🔵 [DEBUG] Wallet keys:", wallet ? Object.keys(wallet) : "null");
+      console.log("🔵 [DEBUG] wallet.account:", wallet?.account);
+      console.log("🔵 [DEBUG] wallet.signTransaction:", typeof wallet?.signTransaction);
+      console.log("🔵 [DEBUG] wallet.signAllTransactions:", typeof (wallet as any)?.signAllTransactions);
+      console.log("🔵 [DEBUG] Mint params:", { name: nftName, metadataUrl });
 
       const mintResult = await mintAIgeneratedNFT({
         wallet: wallet as any,
