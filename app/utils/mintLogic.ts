@@ -80,8 +80,6 @@ function getPhantomWalletAdapter(
 
     const pubkey = new PublicKey(walletAddress);
 
-    console.log("🟡 [MINT] Phantom publicKey:", phantom.publicKey?.toBase58());
-
     return {
         publicKey: pubkey,
         signTransaction: (tx: Web3Transaction) => phantom.signTransaction(tx),
