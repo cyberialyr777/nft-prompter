@@ -82,15 +82,11 @@ export default function Home() {
       const nftName =
         prompt.length > 32 ? prompt.substring(0, 32) + "…" : prompt;
 
-      console.log("🔵 [DEBUG] Wallet object:", wallet);
-      console.log("🔵 [DEBUG] Wallet keys:", wallet ? Object.keys(wallet) : "null");
-      console.log("🔵 [DEBUG] wallet.account:", wallet?.account);
-      console.log("🔵 [DEBUG] wallet.signTransaction:", typeof wallet?.signTransaction);
-      console.log("🔵 [DEBUG] wallet.signAllTransactions:", typeof (wallet as any)?.signAllTransactions);
+      console.log("🔵 [DEBUG] walletAddress:", address);
       console.log("🔵 [DEBUG] Mint params:", { name: nftName, metadataUrl });
 
       const mintResult = await mintAIgeneratedNFT({
-        wallet: wallet as any,
+        walletAddress: address!,
         name: nftName,
         metadataUrl,
       });
