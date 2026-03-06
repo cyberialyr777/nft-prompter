@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useWalletConnection } from "@solana/react-hooks";
-import { mintAIgeneratedNFT } from "./utils/mintLogic";
 
 /* ── Step status type ───────────────────────────────────────────── */
 type Step = {
@@ -73,14 +72,16 @@ export default function Home() {
 
       const { metadataUrl, ipfsImageUrl } = await res.json();
 
-      // Step 3: Mint NFT
+      // Step 3: Mint NFT (dynamic import to avoid SSR issues with Metaplex)
       updateStep(2, "active");
+
+      const { mintAIgeneratedNFT } = await import("./utils/mintLogic");
 
       const nftName =
         prompt.length > 32 ? prompt.substring(0, 32) + "…" : prompt;
 
       const mintResult = await mintAIgeneratedNFT({
-        wallet,
+        wallet: wallet as any,
         name: nftName,
         metadataUrl,
       });
@@ -234,12 +235,12 @@ export default function Home() {
                 <div
                   key={i}
                   className={`flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm transition-all duration-300 ${step.status === "active"
-                      ? "bg-purple-500/10 border border-purple-500/25 animate-progress-pulse"
-                      : step.status === "done"
-                        ? "bg-green-500/8 border border-green-500/15 text-green-300"
-                        : step.status === "error"
-                          ? "bg-red-500/10 border border-red-500/25 text-red-400"
-                          : "text-muted/60 border border-transparent"
+                    ? "bg-purple-500/10 border border-purple-500/25 animate-progress-pulse"
+                    : step.status === "done"
+                      ? "bg-green-500/8 border border-green-500/15 text-green-300"
+                      : step.status === "error"
+                        ? "bg-red-500/10 border border-red-500/25 text-red-400"
+                        : "text-muted/60 border border-transparent"
                     }`}
                 >
                   <span className="text-base">
